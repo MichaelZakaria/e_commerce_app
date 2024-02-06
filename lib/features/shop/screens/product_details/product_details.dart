@@ -1,15 +1,9 @@
-import 'package:e_commerce_app/common/widgets/appbar/appbar.dart';
-import 'package:e_commerce_app/common/widgets/custom_shapes/curved_edge/curved_edges_widget.dart';
-import 'package:e_commerce_app/common/widgets/icons/my_circular_icon.dart';
-import 'package:e_commerce_app/common/widgets/images/my_rounded_image.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/widgets/bottom_add_to_cart_widget.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/widgets/product_detail_image_sider.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/widgets/rating_share.dart';
 import 'package:e_commerce_app/features/shop/screens/product_reviews/product_reviews.dart';
-import 'package:e_commerce_app/utils/constants/image_strings.dart';
-import 'package:e_commerce_app/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -23,23 +17,23 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MyBottomAddToCart(),
+      bottomNavigationBar: const MyBottomAddToCart(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             /// 1 - product image slider
-            MyProductImageSlider(),
+            const MyProductImageSlider(),
             /// 2 - product details
             Padding(
-              padding: EdgeInsets.only(right: MySizes.defaultSpaces, bottom: MySizes.defaultSpaces, left: MySizes.defaultSpaces),
+              padding: const EdgeInsets.only(right: MySizes.defaultSpaces, bottom: MySizes.defaultSpaces, left: MySizes.defaultSpaces),
               child: Column(
                 children: [
                   /// ratings and share button
-                  MyRatingAndShare(),
+                  const MyRatingAndShare(),
                   /// price, title, stock & brand
-                  MyProductMetaData(),
+                  const MyProductMetaData(),
                   /// attributes
-                  MyProductAttributes(),
+                  const MyProductAttributes(),
                   /// checkout button
                   SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {  }, child: const Text('Checkout'),),),
                   const SizedBox(height: MySizes.spaceBtwSections,),

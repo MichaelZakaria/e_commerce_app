@@ -67,13 +67,16 @@ class MyProductCardVertical extends StatelessWidget {
             /// details
             const Padding(
               padding: EdgeInsets.only(left: MySizes.sm),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MyProductTitleText(title: 'Iphone 15 pro max', smallSize: true,),
-                  SizedBox(height: MySizes.spaceBtwItems / 2,),
-                  MyBrandTitleWithVerifiedIcon(title: 'Apple',),
-                ],
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyProductTitleText(title: 'Iphone 15 pro max', smallSize: true,),
+                    SizedBox(height: MySizes.spaceBtwItems / 2,),
+                    MyBrandTitleWithVerifiedIcon(title: 'Apple',),
+                  ],
+                ),
               ),
             ),
             const Spacer(),

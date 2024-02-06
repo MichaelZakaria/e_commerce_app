@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/device/device_utility.dart';
-import '../../../controllers/controllers_onboarding.dart';
+import '../../../controllers/onboarding/controllers_onboarding.dart';
 
 
 class OnBoardingSkip extends StatelessWidget {

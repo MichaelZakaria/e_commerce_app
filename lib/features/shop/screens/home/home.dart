@@ -4,11 +4,13 @@ import 'package:e_commerce_app/features/shop/screens/home/widgets/home_categorie
 import 'package:e_commerce_app/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:e_commerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/image_strings.dart';
+import '../brand/all_products.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -61,12 +63,12 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     /// promo slider
-                    const MyPromoSlider(banners: [MyImages.darkAppLogo, MyImages.darkAppLogo, MyImages.darkAppLogo],),
+                    const MyPromoSlider(),
                     const SizedBox(
                       height: MySizes.spaceBtwSections,
                     ),
                     /// heading
-                    MySectionHeading(title: 'Popular Products', onPressed: (){},),
+                    MySectionHeading(title: 'Popular Products', onPressed: () => Get.to(const AllProducts()),),
                     const SizedBox(
                       height: MySizes.spaceBtwSections,
                     ),

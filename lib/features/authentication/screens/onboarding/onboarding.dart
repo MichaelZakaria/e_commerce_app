@@ -7,7 +7,7 @@ import 'package:e_commerce_app/utils/constants/image_strings.dart';
 import 'package:e_commerce_app/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/controllers_onboarding.dart';
+import '../../controllers/onboarding/controllers_onboarding.dart';
 
 
 class OnBoardingScreen extends StatelessWidget {

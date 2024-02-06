@@ -4,7 +4,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/device/device_utility.dart';
-import '../../../controllers/controllers_onboarding.dart';
+import '../../../controllers/onboarding/controllers_onboarding.dart';
 
 
 class OnBoardingNavigation extends StatelessWidget {

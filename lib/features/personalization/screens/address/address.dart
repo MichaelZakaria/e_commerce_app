@@ -22,7 +22,7 @@ class UserAddressScreen extends StatelessWidget {
         showBackArrow: true,
         title: Text('Addresses', style: Theme.of(context).textTheme.headlineSmall,),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(MySizes.defaultSpaces),
           child: Column(

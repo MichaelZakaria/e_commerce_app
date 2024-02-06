@@ -1,4 +1,12 @@
 class MyValidator {
+
+  // empty text validation
+  static String? validateEmptyText(String? value, String? fieldName) {
+    if (value == null || value.isEmpty) {
+      return '$fieldName is required';
+    }
+    return null;
+  }
   
   // validate email
   static String? validateEmail(String? value) {
@@ -37,6 +45,20 @@ class MyValidator {
       return 'Password must contain at least one special character.' ;
     }
 
+    return null;
+  }
+
+  // validate phone number
+  static String? validatePhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number is required.';
+    }
+    // regular expression for phone number validation (assuming an 11-digit egyptian phone number)
+    final phoneRegExp =RegExp(r'^\d{11}$');
+
+    if (!phoneRegExp.hasMatch(value)) {
+      return 'Invalid phone number format (11 digits required)' ;
+    }
     return null;
   }
 

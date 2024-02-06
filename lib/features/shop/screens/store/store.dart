@@ -3,6 +3,8 @@ import 'package:e_commerce_app/common/widgets/custom_shapes/containers/search_co
 import 'package:e_commerce_app/common/widgets/layouts/grid_layout.dart';
 import 'package:e_commerce_app/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:e_commerce_app/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_app/features/shop/controllers/category_controller.dart';
+import 'package:e_commerce_app/features/shop/screens/all_brands/all_brands.dart';
 import 'package:e_commerce_app/features/shop/screens/store/category_tab.dart';
 import 'package:e_commerce_app/utils/constants/colors.dart';
 import 'package:e_commerce_app/utils/constants/sizes.dart';
@@ -18,8 +20,10 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = CategoryController.instance.featuredCategories;
+
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: MyAppBar(
           title: Text(
@@ -72,7 +76,7 @@ class StoreScreen extends StatelessWidget {
                       const MySearchContainer(text: 'Search in Store', showBorder: true, showBackGround: false, padding: EdgeInsets.zero),
                       const SizedBox(height: MySizes.spaceBtwSections,),
                       /// featured brands
-                      MySectionHeading(title: 'Featured Brands', onPressed: (){},),
+                      MySectionHeading(title: 'Featured Brands', onPressed: () => Get.to(const AllBrandsScreen()),),
                       const SizedBox(height: MySizes.spaceBtwItems / 1.5),
                       /// brands grid
                       MyGridLayout(itemCount: 4, mainAxisExtent: 80, itemBuilder: (_, index) {
@@ -82,21 +86,15 @@ class StoreScreen extends StatelessWidget {
                   ),
                 ),
                 /// tabs
-                bottom: const MyTabBar(
-                  tabs: [
-                    Tab(child: Text('Sports')),
-                    Tab(child: Text('Furniture')),
-                    Tab(child: Text('Electronics')),
-                    Tab(child: Text('Clothes')),
-                    Tab(child: Text('Cosmetics')),
-                  ],
+                bottom: MyTabBar(
+                  tabs: categories.map((category) => Tab(child: Text(category.name))).toList(),
                 ),
               )
             ];
           },
           /// body
-          body: const TabBarView(
-            children: [MyCategoryTab(),MyCategoryTab(),MyCategoryTab(),MyCategoryTab(),MyCategoryTab(),],
+          body: TabBarView(
+            children: categories.map((category) => MyCategoryTab(category: category)).toList()
           ),
         ),
       ),

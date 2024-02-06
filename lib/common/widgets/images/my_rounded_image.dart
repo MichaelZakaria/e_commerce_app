@@ -1,6 +1,5 @@
-import 'package:e_commerce_app/utils/helpers/helper_function.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 
 class MyRoundImage extends StatelessWidget {
@@ -17,6 +16,7 @@ class MyRoundImage extends StatelessWidget {
     this.isNetworkingImage = false,
     this.onPressed,
     this.borderRadius = MySizes.md,
+    this.overlayColor,
   });
 
   final double? width, height;
@@ -29,6 +29,7 @@ class MyRoundImage extends StatelessWidget {
   final bool isNetworkingImage;
   final VoidCallback? onPressed;
   final double borderRadius;
+  final Color? overlayColor;
 
 
   @override
@@ -42,8 +43,16 @@ class MyRoundImage extends StatelessWidget {
         decoration: BoxDecoration(border: border, color: backgroundColor , borderRadius: BorderRadius.circular(borderRadius)),
         child: ClipRRect(
           borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
-          child: Image(
-            image: isNetworkingImage ? NetworkImage(imageUrl) : AssetImage(imageUrl) as ImageProvider,
+          child: isNetworkingImage
+          ? CachedNetworkImage(
+              fit: fit,
+              imageUrl: imageUrl,
+              color: overlayColor,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+          )
+
+          :Image(
+            image: AssetImage(imageUrl),
             fit: fit,
           ),
         ),
