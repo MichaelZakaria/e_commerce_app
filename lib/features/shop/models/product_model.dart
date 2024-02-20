@@ -41,7 +41,7 @@ class ProductModel {
   });
 
   /// Empty Function for clean code
-  static ProductModel empty() => ProductModel(id: '', title: '', stock: '', price: '', thumbnail: '', productType: '');
+  static ProductModel empty() => ProductModel(id: '', title: '', stock: 0, price: 0, thumbnail: '', productType: '');
 
   /// Json Format
   toJson() {
@@ -66,6 +66,7 @@ class ProductModel {
 
   /// Map Json oriented document snapshot from firebase to ProductModel
   factory ProductModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() == null) return ProductModel.empty();
     final data = document.data()!;
     return ProductModel(
       id: document.id,

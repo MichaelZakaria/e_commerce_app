@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 
 class MyRoundImage extends StatelessWidget {
@@ -49,6 +50,8 @@ class MyRoundImage extends StatelessWidget {
               imageUrl: imageUrl,
               color: overlayColor,
               errorWidget: (context, url, error) => const Icon(Icons.error),
+              progressIndicatorBuilder: (_, __, downloadProgress) =>
+                  Center(child: CircularProgressIndicator(value: downloadProgress.progress, color: MyColors.primary,)),
           )
 
           :Image(

@@ -6,6 +6,7 @@ import 'package:e_commerce_app/features/shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../models/product_model.dart';
 
 class FavouriteScreen extends StatelessWidget {
   const FavouriteScreen({super.key});
@@ -26,7 +27,7 @@ class FavouriteScreen extends StatelessWidget {
             children: [
               MyGridLayout(
                 itemCount: 4,
-                itemBuilder: (_, index) => const MyProductCardVertical(),
+                itemBuilder: (_, index) => MyProductCardVertical(product: ProductModel.empty()),
               ),
             ],
           ),

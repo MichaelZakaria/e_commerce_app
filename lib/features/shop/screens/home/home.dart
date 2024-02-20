@@ -5,11 +5,13 @@ import 'package:e_commerce_app/features/shop/screens/home/widgets/promo_slider.d
 import 'package:e_commerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/image_strings.dart';
+import '../../controllers/product/product_controller.dart';
 import '../brand/all_products.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,6 +19,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -73,7 +77,12 @@ class HomeScreen extends StatelessWidget {
                       height: MySizes.spaceBtwSections,
                     ),
                     /// popular products
-                    MyGridLayout(itemCount: 6, itemBuilder: (BuildContext , int ) => const MyProductCardVertical(),),
+                    Obx(() {
+                      if (controller.isLoading.value) return const CircularProgressIndicator();
+                      if (controller.featuredProducts.isEmpty) return Center(child: Text('No Data Found', style: Theme.of(context).textTheme.bodyMedium,),);
+                      return MyGridLayout(itemCount: controller.featuredProducts.length,
+                        itemBuilder: (_ , index ) => MyProductCardVertical(product: controller.featuredProducts[index]),);
+                    }),
                   ],
                 )
             )

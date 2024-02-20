@@ -3,6 +3,7 @@ import 'package:e_commerce_app/common/widgets/images/my_rounded_image.dart';
 import 'package:e_commerce_app/common/widgets/prices/product_price_text.dart';
 import 'package:e_commerce_app/common/widgets/texts/my_brand_title_text_with_verified.dart';
 import 'package:e_commerce_app/common/widgets/texts/product_title_text.dart';
+import 'package:e_commerce_app/features/shop/models/product_model.dart';
 import 'package:e_commerce_app/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class MyProductCardHorizontal extends StatelessWidget {
     final bool dark = MyHelperFunctions.isDarkMode(context);
 
     return GestureDetector(
-        onTap: () => Get.to(const ProductDetailScreen()),
+        onTap: () => Get.to( ProductDetailScreen(product: ProductModel.empty(),)),
         child: Container(
             width: 310,
             padding: const EdgeInsets.all(1),

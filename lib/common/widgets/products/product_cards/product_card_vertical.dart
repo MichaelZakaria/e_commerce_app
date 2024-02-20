@@ -1,13 +1,16 @@
 import 'package:e_commerce_app/common/styles/shadows.dart';
 import 'package:e_commerce_app/common/widgets/custom_shapes/containers/circular_container.dart';
 import 'package:e_commerce_app/common/widgets/images/my_rounded_image.dart';
+import 'package:e_commerce_app/features/shop/models/product_model.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/product_details.dart';
+import 'package:e_commerce_app/utils/constants/enums.dart';
 import 'package:e_commerce_app/utils/constants/image_strings.dart';
 import 'package:e_commerce_app/utils/constants/sizes.dart';
 import 'package:e_commerce_app/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../features/shop/controllers/product/product_controller.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../icons/my_circular_icon.dart';
 import '../../prices/product_price_text.dart';
@@ -15,15 +18,18 @@ import '../../texts/my_brand_title_text_with_verified.dart';
 import '../../texts/product_title_text.dart';
 
 class MyProductCardVertical extends StatelessWidget {
-  const MyProductCardVertical({super.key});
+  const MyProductCardVertical({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
     final dark = MyHelperFunctions.isDarkMode(context);
 
     /// container with side paddings, color, edges, radius, and shadow.
     return GestureDetector(
-      onTap: () => Get.to(const ProductDetailScreen()),
+      onTap: () => Get.to(ProductDetailScreen(product: product,)),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -37,12 +43,13 @@ class MyProductCardVertical extends StatelessWidget {
             /// thumbnail, wishlist button, discount Tag
             MyCircularContainer(
               height: 175,
+              width: 175,
               padding: const EdgeInsets.all(MySizes.sm),
               backGround: dark ? MyColors.dark : MyColors.light,
               child: Stack(
                 children: [
                   /// thumbnail image
-                  const MyRoundImage(imageUrl: MyImages.iphone15ProMaxNaturalTitanium, applyImageRadius: true, height: 175,),
+                  Center(child: MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, height: 175, isNetworkingImage: true,)),
                   /// sale tag
                   Positioned(
                     top: 8,
@@ -51,7 +58,7 @@ class MyProductCardVertical extends StatelessWidget {
                         radius: MySizes.sm,
                         backGround: MyColors.secondary.withOpacity(0.8),
                         padding: const EdgeInsets.symmetric(horizontal: MySizes.sm, vertical: MySizes.xs),
-                        child: Text('25%', style: Theme.of(context).textTheme.labelLarge!.apply(color: MyColors.black)),
+                        child: Text(('${controller.calculateSalePercentage(product.price, product.salePrice)}%') ?? '', style: Theme.of(context).textTheme.labelLarge!.apply(color: MyColors.black)),
                         ),
                       ),
                   /// favourite icon button
@@ -65,16 +72,16 @@ class MyProductCardVertical extends StatelessWidget {
             ),
             const SizedBox(height: MySizes.spaceBtwItems / 2,),
             /// details
-            const Padding(
-              padding: EdgeInsets.only(left: MySizes.sm),
+            Padding(
+              padding: const EdgeInsets.only(left: MySizes.sm),
               child: SizedBox(
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MyProductTitleText(title: 'Iphone 15 pro max', smallSize: true,),
-                    SizedBox(height: MySizes.spaceBtwItems / 2,),
-                    MyBrandTitleWithVerifiedIcon(title: 'Apple',),
+                    MyProductTitleText(title: product.title, smallSize: true,),
+                    const SizedBox(height: MySizes.spaceBtwItems / 2,),
+                    MyBrandTitleWithVerifiedIcon(title: product.brand!.name,),
                   ],
                 ),
               ),
@@ -84,9 +91,27 @@ class MyProductCardVertical extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 /// Price
-                const Padding(
-                  padding: EdgeInsets.only(left: MySizes.sm),
-                  child: MyProductPriceText(price: '1199.99', maxLines: 1,),
+                Flexible(
+                  child: Column(
+                    children: [
+
+                      if (product.productType == ProductType.single.toString() && product.salePrice > 0)
+                        Padding(
+                          padding: const EdgeInsets.only(left: MySizes.sm),
+                          child: Text(
+                            '\$$product.price.toString()',
+                            style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough)
+                          ),
+                        ),
+
+                      /// Price, show sale price as main price if sale exist
+                      Padding(
+                        padding: const EdgeInsets.only(left: MySizes.sm),
+                        child: MyProductPriceText(price: controller.getProductPrice(product),),
+                      ),
+
+                    ],
+                  ),
                 ),
                 ///add to cart
                 Container(
