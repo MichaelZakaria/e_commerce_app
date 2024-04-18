@@ -5,14 +5,12 @@ import 'package:e_commerce_app/features/shop/screens/home/widgets/promo_slider.d
 import 'package:e_commerce_app/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
-import '../../../../utils/constants/image_strings.dart';
 import '../../controllers/product/product_controller.dart';
-import '../brand/all_products.dart';
+import '../all_products/all_products.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -72,14 +70,24 @@ class HomeScreen extends StatelessWidget {
                       height: MySizes.spaceBtwSections,
                     ),
                     /// heading
-                    MySectionHeading(title: 'Popular Products', onPressed: () => Get.to(const AllProducts()),),
+                    MySectionHeading(
+                      title: 'Popular Products',
+                      onPressed:
+                          () => Get.to(
+                              () => AllProducts(
+                                  title: 'Popular Products',
+                                  futureMethod: controller.fetchAllFeaturedProducts()
+                              )),
+                    ),
                     const SizedBox(
                       height: MySizes.spaceBtwSections,
                     ),
                     /// popular products
                     Obx(() {
                       if (controller.isLoading.value) return const CircularProgressIndicator();
-                      if (controller.featuredProducts.isEmpty) return Center(child: Text('No Data Found', style: Theme.of(context).textTheme.bodyMedium,),);
+                      if (controller.featuredProducts.isEmpty) {
+                        return Center(child: Text('No Data Found', style: Theme.of(context).textTheme.bodyMedium,),);
+                      }
                       return MyGridLayout(itemCount: controller.featuredProducts.length,
                         itemBuilder: (_ , index ) => MyProductCardVertical(product: controller.featuredProducts[index]),);
                     }),

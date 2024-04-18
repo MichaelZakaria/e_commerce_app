@@ -35,6 +35,17 @@ class ProductController extends GetxController {
     }
   }
 
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
+    try {
+      // fetch products
+      final products = await productRepository.getAllFeaturedProducts();
+      return products;
+    } catch (e) {
+      MyLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      return [];
+    }
+  }
+
   void fetchProductImaged() async {
     try {
       // show loader

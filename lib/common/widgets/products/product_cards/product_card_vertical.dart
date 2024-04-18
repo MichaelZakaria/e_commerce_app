@@ -4,7 +4,6 @@ import 'package:e_commerce_app/common/widgets/images/my_rounded_image.dart';
 import 'package:e_commerce_app/features/shop/models/product_model.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/product_details.dart';
 import 'package:e_commerce_app/utils/constants/enums.dart';
-import 'package:e_commerce_app/utils/constants/image_strings.dart';
 import 'package:e_commerce_app/utils/constants/sizes.dart';
 import 'package:e_commerce_app/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -51,16 +50,19 @@ class MyProductCardVertical extends StatelessWidget {
                   /// thumbnail image
                   Center(child: MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, height: 175, isNetworkingImage: true,)),
                   /// sale tag
-                  Positioned(
-                    top: 8,
-                      left: 0,
-                      child: MyCircularContainer(
-                        radius: MySizes.sm,
-                        backGround: MyColors.secondary.withOpacity(0.8),
-                        padding: const EdgeInsets.symmetric(horizontal: MySizes.sm, vertical: MySizes.xs),
-                        child: Text(('${controller.calculateSalePercentage(product.price, product.salePrice)}%') ?? '', style: Theme.of(context).textTheme.labelLarge!.apply(color: MyColors.black)),
-                        ),
-                      ),
+                  if (controller.calculateSalePercentage(product.price, product.salePrice) != null)
+                      Positioned(
+                        top: 8,
+                          left: 0,
+                          child: MyCircularContainer(
+                            radius: MySizes.sm,
+                            backGround: MyColors.secondary.withOpacity(0.8),
+                            padding: const EdgeInsets.symmetric(horizontal: MySizes.sm, vertical: MySizes.xs),
+                            child: Text(
+                                ('${controller.calculateSalePercentage(product.price, product.salePrice)}%') ?? '',
+                                style: Theme.of(context).textTheme.labelLarge!.apply(color: MyColors.black)),
+                            ),
+                          ),
                   /// favourite icon button
                   const Positioned(
                       top: 0,

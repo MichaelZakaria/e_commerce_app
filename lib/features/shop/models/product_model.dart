@@ -70,16 +70,38 @@ class ProductModel {
     final data = document.data()!;
     return ProductModel(
       id: document.id,
-      title: data['Title'],
-      isFeatured: data['IsFeatured'],
+      title: data['Title'] ?? '',
+      isFeatured: data['IsFeatured'] ?? false,
       price: double.parse((data['Price'] ?? 0.0).toString()),
-      sku: data['SKU'],
+      sku: data['SKU'] ?? '',
       stock: data['Stock'] ?? 0,
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       thumbnail: data['Thumbnail'] ?? '',
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
-      productType: data['ProductType'],
+      productType: data['ProductType'] ?? '',
+      brand: BrandModel.fromJson(data['Brand']),
+      images: data['Images'] != null ? List<String>.from(data['Images']) : [],
+      productAttributes: (data['ProductAttributes'] as List<dynamic>).map((e) => ProductAttributeModel.fromJson(e)).toList(),
+      productVariations: (data['ProductVariations'] as List<dynamic>).map((e) => ProductVariationModel.fromJson(e)).toList(),
+    );
+  }
+
+  /// Map Json oriented document snapshot from firebase to ProductModel (2)
+  factory ProductModel.fromQuerySnapshot(DocumentSnapshot<Object?> document) {
+    final data = document.data() as Map<String, dynamic>;
+    return ProductModel(
+      id: document.id,
+      title: data['Title'] ?? '',
+      isFeatured: data['IsFeatured'] ?? false,
+      price: double.parse((data['Price'] ?? 0.0).toString()),
+      sku: data['SKU'] ?? '',
+      stock: data['Stock'] ?? 0,
+      salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
+      thumbnail: data['Thumbnail'] ?? '',
+      categoryId: data['CategoryId'] ?? '',
+      description: data['Description'] ?? '',
+      productType: data['ProductType'] ?? '',
       brand: BrandModel.fromJson(data['Brand']),
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       productAttributes: (data['ProductAttributes'] as List<dynamic>).map((e) => ProductAttributeModel.fromJson(e)).toList(),

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/features/shop/models/brand_model.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/constants/enums.dart';
 import '../../../utils/constants/image_strings.dart';
@@ -10,8 +11,10 @@ class MyBrandCard extends StatelessWidget {
     super.key,
     required this.showBorder,
     this.onTap,
+    required this.brand,
   });
 
+  final BrandModel brand;
   final bool showBorder;
   final void Function()? onTap;
 
@@ -26,7 +29,7 @@ class MyBrandCard extends StatelessWidget {
         child: Row(
           children: [
             /// icon
-            const Flexible(child: MuCircularImage(image: MyImages.apple ,)),
+            Flexible(child: MuCircularImage(image: brand.image, isNetworkImage: true,)),
             //const SizedBox(width: MySizes.spaceBtwItems / 2),
             /// text
             Expanded(
@@ -34,9 +37,9 @@ class MyBrandCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const MyBrandTitleWithVerifiedIcon(title: 'Apple', brandTextSize: TextSizes.medium,),
+                 MyBrandTitleWithVerifiedIcon(title: brand.name, brandTextSize: TextSizes.medium,),
                   Text(
-                    '256 products',
+                    '${brand.productsCount ?? 0} products',
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium,
                   )

@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_function.dart';
@@ -35,11 +35,23 @@ class MuCircularImage extends StatelessWidget {
         color: backgroundColor ?? (MyHelperFunctions.isDarkMode(context)? MyColors.black : MyColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
-      child: Image(
-        image: isNetworkImage ? NetworkImage(image) : AssetImage(image) as ImageProvider,
-        color: overlayColor ?? (MyHelperFunctions.isDarkMode(context)? MyColors.white : MyColors.dark),
-        fit: fit,
+      child: isNetworkImage ? CachedNetworkImage(
+        imageUrl: image,
+        color:  overlayColor ?? (MyHelperFunctions.isDarkMode(context)? MyColors.white : MyColors.dark),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        progressIndicatorBuilder: (_, __, downloadProgress) =>
+            Center(child: CircularProgressIndicator(value: downloadProgress.progress, color: MyColors.primary,)),
+      )
+          :Image(
+        image: AssetImage(image),
       ),
+
+      // Old ##########################################################################################3
+      // Image(
+      //   image: isNetworkImage ? NetworkImage(image) : AssetImage(image) as ImageProvider,
+      //   color: overlayColor ?? (MyHelperFunctions.isDarkMode(context)? MyColors.white : MyColors.dark),
+      //   fit: fit,
+      // ),
     );
   }
 }
