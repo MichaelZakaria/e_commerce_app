@@ -21,12 +21,12 @@ class MyCloudHelperFunction {
   static Widget? checkMultipleRecordState<T>({required AsyncSnapshot<List<T>> snapshot, Widget? loader, Widget? error, Widget? nothingFound}) {
     if(snapshot.connectionState == ConnectionState.waiting) {
       if (loader != null) return loader;
-      return const Padding(padding: EdgeInsets.only(top: 20), child: Center(child: CircularProgressIndicator()));
+      return const Padding(padding: EdgeInsets.only(top: 50), child: Center(child: CircularProgressIndicator()));
     }
 
     if(!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
       if (nothingFound != null) return nothingFound;
-      return const Center(child: Text('No Data Found'));
+      return const Padding(padding: EdgeInsets.only(top: 50), child: Center(child: Text('No Data Found')));
     }
 
     if(snapshot.hasError) {

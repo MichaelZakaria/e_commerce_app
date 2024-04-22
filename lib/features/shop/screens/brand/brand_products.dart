@@ -30,7 +30,7 @@ class BrandProducts extends StatelessWidget {
               const SizedBox(height: MySizes.spaceBtwSections,),
 
               FutureBuilder(
-                future: controller.getBrandProducts(brand.id),
+                future: controller.getBrandProducts(brandId: brand.id),
                 builder: (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
 
                   final widget = MyCloudHelperFunction.checkMultipleRecordState(snapshot: snapshot);
