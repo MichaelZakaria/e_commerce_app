@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/common/styles/shadows.dart';
 import 'package:e_commerce_app/common/widgets/custom_shapes/containers/circular_container.dart';
 import 'package:e_commerce_app/common/widgets/images/my_rounded_image.dart';
+import 'package:e_commerce_app/common/widgets/products/favourite_icon/favourite_icon.dart';
 import 'package:e_commerce_app/features/shop/models/product_model.dart';
 import 'package:e_commerce_app/features/shop/screens/product_details/product_details.dart';
 import 'package:e_commerce_app/utils/constants/enums.dart';
@@ -64,10 +65,10 @@ class MyProductCardVertical extends StatelessWidget {
                             ),
                           ),
                   /// favourite icon button
-                  const Positioned(
+                 Positioned(
                       top: 0,
                       right: 0,
-                      child: MyCircularIcon(icon: Iconsax.heart5, color: Colors.red, width: 40, height: 40,)
+                      child: MyFavouriteIcon(productId: product.id,)
                   ),
                 ],
               ),

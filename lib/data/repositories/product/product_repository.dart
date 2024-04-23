@@ -105,6 +105,21 @@ class ProductRepository extends GetxController{
     }
   }
 
+  /// Get products favourite products
+  Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
+    try {
+      final snapshot = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
+      final List<ProductModel> productList = snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      return productList;
+    } on FirebaseException catch (e) {
+      throw MyFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw MyPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong please try again';
+    }
+  }
+
   /// Upload dummy data to the cloud Firebase
 
 

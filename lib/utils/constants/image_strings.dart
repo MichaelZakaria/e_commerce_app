@@ -32,6 +32,7 @@ class MyImages {
 
   // lottie animations
   static const String personalInformationLoader = "assets/images/lottie_animation/personal_info_loader.json";
+  static const String nothingFoundLoader = "assets/images/lottie_animation/nothing_found.json";
 
 
 }

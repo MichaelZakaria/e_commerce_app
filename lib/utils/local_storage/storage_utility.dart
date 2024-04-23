@@ -1,19 +1,28 @@
 import 'package:get_storage/get_storage.dart';
 
-// A singleton class (design pattern) for maintaining a single connection tom improve performance and avoid redundant connections
+// A singleton class (design pattern) for maintaining a single connection to improve performance and avoid redundant connections
 class MyLocalStorage {
+
+  late final GetStorage _storage;
+
+  // instance of the class
+  static MyLocalStorage? _instance;
+
   // private constructor
   MyLocalStorage._internal();
 
-  // instance of the class
-  static final MyLocalStorage _instance = MyLocalStorage._internal();
-
   // factory constructor
-  factory MyLocalStorage() {
-    return _instance;
+  factory MyLocalStorage.instance() {
+    _instance ??= MyLocalStorage._internal();
+    return _instance!;
   }
 
-  final _storage = GetStorage();
+  static Future<void> init(String bucketName) async {
+    await GetStorage.init(bucketName);
+    _instance = MyLocalStorage._internal();
+    _instance!._storage =GetStorage(bucketName);
+  }
+
 
   // generic method to save data
   Future<void> saveData<T>(String key, T value) async {

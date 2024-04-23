@@ -8,6 +8,7 @@ import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/custom_shapes/curved_edge/curved_edges_widget.dart';
 import '../../../../../common/widgets/icons/my_circular_icon.dart';
 import '../../../../../common/widgets/images/my_rounded_image.dart';
+import '../../../../../common/widgets/products/favourite_icon/favourite_icon.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -76,10 +77,10 @@ class MyProductImageSlider extends StatelessWidget {
                 ),
               ),
             ),
-            const MyAppBar(
+            MyAppBar(
               showBackArrow: true,
               actions: [
-                MyCircularIcon(icon: Iconsax.heart5, color: Colors.red,)
+                MyFavouriteIcon(productId: product.id,)
               ],
             )
           ],

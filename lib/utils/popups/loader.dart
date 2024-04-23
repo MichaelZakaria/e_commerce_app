@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -5,6 +6,25 @@ import 'package:iconsax/iconsax.dart';
 import '../constants/colors.dart';
 
 class MyLoaders {
+
+  static customToast({required message}) {
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.transparent,
+          content: Container(
+            padding: const EdgeInsets.all(12),
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: MyHelperFunctions.isDarkMode(Get.context!) ? MyColors.darkGrey.withOpacity(0.9) : MyColors.grey.withOpacity(0.9)
+            ),
+            child: Center(child: Text(message, style: Theme.of(Get.context!).textTheme.labelLarge,)),
+          )
+        )
+    );
+  }
 
   static successSnackBar({required title, message='', duration = 3}) {
     Get.snackbar(
