@@ -8,22 +8,27 @@ import 'package:e_commerce_app/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../features/shop/controllers/product/product_controller.dart';
 import '../../../../features/shop/screens/product_details/product_details.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/enums.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../icons/my_circular_icon.dart';
 import '../favourite_icon/favourite_icon.dart';
 
 class MyProductCardHorizontal extends StatelessWidget {
-  const MyProductCardHorizontal({super.key});
+  const MyProductCardHorizontal({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
     final bool dark = MyHelperFunctions.isDarkMode(context);
 
     return GestureDetector(
-        onTap: () => Get.to( ProductDetailScreen(product: ProductModel.empty(),)),
+        onTap: () => Get.to(ProductDetailScreen(product: product)),
         child: Container(
             width: 310,
             padding: const EdgeInsets.all(1),
@@ -41,10 +46,10 @@ class MyProductCardHorizontal extends StatelessWidget {
                 child: Stack(
                   children: [
                     /// thumbnail image
-                    const SizedBox(
+                    SizedBox(
                       height: 120,
                       width: 120,
-                      child: MyRoundImage(imageUrl: MyImages.iphone15ProMaxNaturalTitanium, applyImageRadius: true,),
+                      child: MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, isNetworkingImage: true,),
                     ),
                     /// sale tag
                     Positioned(
@@ -54,14 +59,17 @@ class MyProductCardHorizontal extends StatelessWidget {
                         radius: MySizes.sm,
                         backGround: MyColors.secondary.withOpacity(0.8),
                         padding: const EdgeInsets.symmetric(horizontal: MySizes.sm, vertical: MySizes.xs),
-                        child: Text('25%', style: Theme.of(context).textTheme.labelLarge!.apply(color: MyColors.black)),
+                        child: Text(
+                            ('${controller.calculateSalePercentage(product.price, product.salePrice)}%') ?? '',
+                            style: Theme.of(context).textTheme.labelLarge!.apply(color: MyColors.black)
+                        ),
                       ),
                     ),
                     /// favourite icon button
-                    const Positioned(
+                    Positioned(
                         top: 0,
                         right: 0,
-                        child: MyFavouriteIcon(productId: '',)
+                        child: MyFavouriteIcon(productId: product.id)
                     ),
                   ],
                 ),
@@ -75,12 +83,12 @@ class MyProductCardHorizontal extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyProductTitleText(title: 'Iphone 15 Pro Max', smallSize: true,),
-                          SizedBox(height: MySizes.spaceBtwItems / 2,),
-                          MyBrandTitleWithVerifiedIcon(title: 'Apple'),
+                          MyProductTitleText(title: product.title, smallSize: true,),
+                          const SizedBox(height: MySizes.spaceBtwItems / 2,),
+                          MyBrandTitleWithVerifiedIcon(title: product.brand!.name),
                         ],
                       ),
 
@@ -90,7 +98,28 @@ class MyProductCardHorizontal extends StatelessWidget {
                         mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                         children: [
                           /// pricing
-                          const Flexible(child: MyProductPriceText(price: '1199.99')),
+                          Flexible(
+                            child: Column(
+                              children: [
+
+                                if (product.productType == ProductType.single.toString() && product.salePrice > 0)
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    child: Text(
+                                        '\$$product.price.toString()',
+                                        style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough)
+                                    ),
+                                  ),
+
+                                /// Price, show sale price as main price if sale exist
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: MyProductPriceText(price: controller.getProductPrice(product),),
+                                ),
+
+                              ],
+                            ),
+                          ),
 
                           /// add to cart
                           Container(

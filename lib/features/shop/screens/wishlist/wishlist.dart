@@ -5,6 +5,7 @@ import 'package:e_commerce_app/common/widgets/loaders/animation_loader.dart';
 import 'package:e_commerce_app/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:e_commerce_app/features/shop/controllers/product/favourite_controller.dart';
 import 'package:e_commerce_app/features/shop/screens/home/home.dart';
+import 'package:e_commerce_app/features/shop/screens/store/store.dart';
 import 'package:e_commerce_app/navigation_menu.dart';
 import 'package:e_commerce_app/utils/constants/image_strings.dart';
 import 'package:e_commerce_app/utils/helpers/cloud_helper_functions.dart';

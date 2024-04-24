@@ -29,6 +29,7 @@ class MyImages {
 
   // promo banners
   static const String phonesPromoBanner = "assets/images/promo_banners/phones_promo_banner.jpeg";
+  static const String salePromoBanner = "assets/images/promo_banners/sale_promo_banner.jpg";
 
   // lottie animations
   static const String personalInformationLoader = "assets/images/lottie_animation/personal_info_loader.json";

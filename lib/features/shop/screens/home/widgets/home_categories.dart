@@ -31,7 +31,7 @@ class MyHomeCategories extends StatelessWidget {
                 final category = categoryController.featuredCategories[index];
                 return MyVerticalImageText(image: category.image,
                   title: category.name,
-                  onTap: () => Get.to(const SubCategoriesScreen()),);
+                  onTap: () => Get.to(SubCategoriesScreen(category: category,)),);
               }
           ),
         );
