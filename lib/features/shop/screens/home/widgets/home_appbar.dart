@@ -24,8 +24,8 @@ class MyHomeAppbar extends StatelessWidget {
                 Obx( () => Text(controller.user.value.fullName, style: Theme.of(context).textTheme.headlineSmall!.apply(color: MyColors.white,),)),
               ],
             ),
-            actions: [
-              MyCartCounterIcon(onPressed: () => Get.to(const CartScreen()), iconColor: MyColors.white,)
+            actions: const [
+              MyCartCounterIcon(iconColor: MyColors.white,)
             ],
     );
   }

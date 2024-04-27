@@ -40,10 +40,13 @@ class MyProductImageSlider extends StatelessWidget {
                 padding: const EdgeInsets.all(MySizes.productImageRadius * 2),
                 child: Center(child: Obx(() => GestureDetector(
                   onTap: () => controller.showEnlargedImage(controller.selectedProductImage.value),
-                  child: CachedNetworkImage(
-                    imageUrl: controller.selectedProductImage.value,
-                    progressIndicatorBuilder: (_, __, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress, color: MyColors.primary,),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(
+                      imageUrl: controller.selectedProductImage.value,
+                      progressIndicatorBuilder: (_, __, downloadProgress) =>
+                      CircularProgressIndicator(value: downloadProgress.progress, color: MyColors.primary,),
+                    ),
                   ),
                 ))),
               ),

@@ -46,7 +46,10 @@ class ImageController extends GetxController{
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: MySizes.defaultSpaces * 2, horizontal: MySizes.defaultSpaces),
-                child: CachedNetworkImage(imageUrl: image,),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(imageUrl: image,)
+                ),
               ),
               const SizedBox(height: MySizes.spaceBtwSections,),
               Align(

@@ -50,11 +50,16 @@ Widget brandTopProductImageWidget (String image, context) {
       backGround: MyHelperFunctions.isDarkMode(context) ? MyColors.darkGrey : MyColors.light,
       margin: const EdgeInsets.only(right: MySizes.sm),
       padding:const EdgeInsets.all(MySizes.sm),
-      child: CachedNetworkImage(
-        fit: BoxFit.contain,
-        imageUrl: image,
-        progressIndicatorBuilder: (context, url, downloadProgress) => const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => const Icon(Icons.error)
+      child: Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(MySizes.sm),
+          child: CachedNetworkImage(
+            fit: BoxFit.contain,
+            imageUrl: image,
+            progressIndicatorBuilder: (context, url, downloadProgress) => const Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => const Icon(Icons.error)
+          ),
+        ),
       )
     ),
   );

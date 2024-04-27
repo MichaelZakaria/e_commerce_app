@@ -43,12 +43,8 @@ class AddressController extends GetxController {
   Future selectAddress(AddressModel newSelectedAddress) async {
     try {
       // Start loader
-      Get.defaultDialog(
-        title: 'Saving Change',
-        onWillPop: () async {return false;},
-        barrierDismissible: false,
-        backgroundColor: MyColors.dark.withOpacity(0.8),
-        content: const CircularProgressIndicator()
+      Get.dialog(
+          const Center(child: CircularProgressIndicator())
       );
 
       // clear the "selected" field

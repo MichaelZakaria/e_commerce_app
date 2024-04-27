@@ -36,9 +36,8 @@ class StoreScreen extends StatelessWidget {
                 .textTheme
                 .headlineMedium,
           ),
-          actions: [
+          actions: const [
             MyCartCounterIcon(
-              onPressed: () => Get.to(const CartScreen()),
             )
           ],
         ),

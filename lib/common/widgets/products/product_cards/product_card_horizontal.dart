@@ -12,10 +12,9 @@ import '../../../../features/shop/controllers/product/product_controller.dart';
 import '../../../../features/shop/screens/product_details/product_details.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/enums.dart';
-import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../../icons/my_circular_icon.dart';
 import '../favourite_icon/favourite_icon.dart';
+import 'add_to_cart_button.dart';
 
 class MyProductCardHorizontal extends StatelessWidget {
   const MyProductCardHorizontal({super.key, required this.product});
@@ -46,11 +45,7 @@ class MyProductCardHorizontal extends StatelessWidget {
                 child: Stack(
                   children: [
                     /// thumbnail image
-                    SizedBox(
-                      height: 120,
-                      width: 120,
-                      child: MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, isNetworkingImage: true,),
-                    ),
+                    MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, isNetworkingImage: true,),
                     /// sale tag
                     Positioned(
                       top: 8,
@@ -76,8 +71,7 @@ class MyProductCardHorizontal extends StatelessWidget {
               ),
 
               /// details
-              SizedBox(
-                width: 172,
+              Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: MySizes.sm, left: MySizes.sm),
                   child: Column(
@@ -96,6 +90,7 @@ class MyProductCardHorizontal extends StatelessWidget {
 
                       Row(
                         mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           /// pricing
                           Flexible(
@@ -104,16 +99,16 @@ class MyProductCardHorizontal extends StatelessWidget {
 
                                 if (product.productType == ProductType.single.toString() && product.salePrice > 0)
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 0),
+                                    padding: const EdgeInsets.only(bottom: 2),
                                     child: Text(
-                                        '\$$product.price.toString()',
+                                        '\$${product.price.toString()}',
                                         style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough)
                                     ),
                                   ),
 
                                 /// Price, show sale price as main price if sale exist
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 0),
+                                  padding: const EdgeInsets.only(bottom: 8),
                                   child: MyProductPriceText(price: controller.getProductPrice(product),),
                                 ),
 
@@ -122,20 +117,7 @@ class MyProductCardHorizontal extends StatelessWidget {
                           ),
 
                           /// add to cart
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: MyColors.dark,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(MySizes.cardRadiusMd),
-                                  bottomRight: Radius.circular(MySizes.productImageRadius),
-                                )
-                            ),
-                            child: const SizedBox(
-                              width: MySizes.iconLg * 1.2,
-                              height: MySizes.iconLg * 1.2,
-                              child: Center(child: Icon(Iconsax.add, color: MyColors.white,),),
-                            ),
-                          )
+                          ProductCardAddToCartButton(product: product)
                         ],
                       )
                     ],

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/features/shop/models/cart_item_model.dart';
 import 'package:flutter/material.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
@@ -9,8 +10,10 @@ import '../../texts/product_title_text.dart';
 
 class MyCartItem extends StatelessWidget {
   const MyCartItem({
-    super.key,
+    super.key, required this.cartItem,
   });
+
+  final CartItemModel cartItem;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,8 @@ class MyCartItem extends StatelessWidget {
       children: [
         /// image
         MyRoundImage(
-          imageUrl: MyImages.iphone15ProMaxNaturalTitanium,
+          imageUrl: cartItem.image ?? '',
+          isNetworkingImage: true,
           width: 60,
           height: 60,
           padding: const EdgeInsets.all(MySizes.sm),
@@ -30,17 +34,19 @@ class MyCartItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const MyBrandTitleWithVerifiedIcon(title: 'Nike'),
-              const MyProductTitleText(title: 'Iphone 15 Pro Max', maxLines: 1,),
+              MyBrandTitleWithVerifiedIcon(title: cartItem.brandName ?? ''),
+              MyProductTitleText(title: cartItem.title, maxLines: 1,),
               /// attributes
               Text.rich(
                   TextSpan(
-                      children: [
-                        TextSpan(text: 'Color ', style: Theme.of(context).textTheme.bodySmall),
-                        TextSpan(text: 'Natural Titanium ', style: Theme.of(context).textTheme.bodyLarge),
-                        TextSpan(text: 'Storage ', style: Theme.of(context).textTheme.bodySmall),
-                        TextSpan(text: '512 GB ', style: Theme.of(context).textTheme.bodyLarge),
-                      ]
+                      children: (cartItem.selectedVariation ?? {})
+                          .entries
+                          .map((item) => TextSpan(
+                              children: [
+                                TextSpan(text: item.key, style: Theme.of(context).textTheme.bodySmall),
+                                TextSpan(text: item.value, style: Theme.of(context).textTheme.bodyLarge),
+                              ]
+                      )) .toList()
                   )
               )
             ],

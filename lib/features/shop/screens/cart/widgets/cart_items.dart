@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/features/shop/controllers/product/cart_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../../common/widgets/prices/product_price_text.dart';
 import '../../../../../common/widgets/products/cart/add_remove_button.dart';
 import '../../../../../common/widgets/products/cart/cart_item.dart';
@@ -11,43 +13,57 @@ class MyCartItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      separatorBuilder: (_, __) => const SizedBox(
-        height: MySizes.spaceBtwSections,
-      ),
-      itemCount: 2,
-      itemBuilder: (_, index) => Column(
-        children: [
-          /// cart item
-          const MyCartItem(),
-          if (showAddRemoveButtons)
-            const SizedBox(
-              height: MySizes.spaceBtwItems,
-            ),
+    final controller = CartController.instance;
 
-          /// add & remove with total price
-          if (showAddRemoveButtons)
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 70,
+    return Obx(
+      () =>ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        separatorBuilder: (_, __) => const SizedBox(
+          height: MySizes.spaceBtwSections,
+        ),
+        itemCount: controller.cartItems.length,
+        itemBuilder: (_, index) => Obx(
+            () {
+              final item = controller.cartItems[index];
+
+              return Column(
+                children: [
+                  /// cart item
+                  MyCartItem(cartItem: item),
+                  if (showAddRemoveButtons)
+                    const SizedBox(
+                      height: MySizes.spaceBtwItems,
                     ),
 
-                    /// add & remove buttons
-                    MyProductQuantityWithAddRemoveButton(),
-                  ],
-                ),
+                  /// add & remove with total price
+                  if (showAddRemoveButtons)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 70,
+                            ),
 
-                /// product total price
-                MyProductPriceText(price: '1199.99'),
-              ],
-            )
-        ],
+                            /// add & remove buttons
+                            MyProductQuantityWithAddRemoveButton(
+                                quantity: item.quantity, 
+                                add: () => controller.addOneToCart(item),
+                                remove: () => controller.removeOneFormCart(item),
+                            ),
+                          ],
+                        ),
+
+                        /// product total price
+                        MyProductPriceText(price: (item.price * item.quantity).toStringAsFixed(1))
+                      ],
+                    )
+                ],
+              );
+            }
+        ),
       ),
     );
   }

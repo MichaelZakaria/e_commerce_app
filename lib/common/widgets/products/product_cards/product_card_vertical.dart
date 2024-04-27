@@ -16,6 +16,7 @@ import '../../icons/my_circular_icon.dart';
 import '../../prices/product_price_text.dart';
 import '../../texts/my_brand_title_text_with_verified.dart';
 import '../../texts/product_title_text.dart';
+import 'add_to_cart_button.dart';
 
 class MyProductCardVertical extends StatelessWidget {
   const MyProductCardVertical({super.key, required this.product});
@@ -49,7 +50,7 @@ class MyProductCardVertical extends StatelessWidget {
               child: Stack(
                 children: [
                   /// thumbnail image
-                  Center(child: MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, height: 175, isNetworkingImage: true,)),
+                  Center(child: MyRoundImage(imageUrl: product.thumbnail, applyImageRadius: true, height: 130, isNetworkingImage: true,)),
                   /// sale tag
                   if (controller.calculateSalePercentage(product.price, product.salePrice) != null)
                       Positioned(
@@ -102,7 +103,7 @@ class MyProductCardVertical extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: MySizes.sm),
                           child: Text(
-                            '\$$product.price.toString()',
+                            '\$${product.price.toString()}',
                             style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough)
                           ),
                         ),
@@ -117,20 +118,7 @@ class MyProductCardVertical extends StatelessWidget {
                   ),
                 ),
                 ///add to cart
-                Container(
-                  decoration: const BoxDecoration(
-                      color: MyColors.dark,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(MySizes.cardRadiusMd),
-                        bottomRight: Radius.circular(MySizes.productImageRadius),
-                      )
-                  ),
-                  child: const SizedBox(
-                    width: MySizes.iconLg * 1.2,
-                    height: MySizes.iconLg * 1.2,
-                    child: Center(child: Icon(Iconsax.add, color: MyColors.white,),),
-                  ),
-                )
+                ProductCardAddToCartButton(product: product)
               ],
             )
           ],
@@ -139,11 +127,3 @@ class MyProductCardVertical extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
