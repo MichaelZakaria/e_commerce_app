@@ -43,7 +43,7 @@ class MyCartItems extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 70,
                             ),
 
@@ -57,7 +57,7 @@ class MyCartItems extends StatelessWidget {
                         ),
 
                         /// product total price
-                        MyProductPriceText(price: (item.price * item.quantity).toStringAsFixed(1))
+                        MyProductPriceText(price: (item.price * item.quantity).toStringAsFixed(2))
                       ],
                     )
                 ],

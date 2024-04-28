@@ -189,6 +189,7 @@ class CartController extends GetxController {
   int getVariationQuantityInCart(String productId, String variationId) {
     final foundItem = cartItems.firstWhere(
             (item) => item.productId == productId && item.variationId == variationId,
+            orElse: () => CartItemModel.empty()
     );
     return foundItem.quantity;
   }

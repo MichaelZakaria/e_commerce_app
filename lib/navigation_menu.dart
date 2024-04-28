@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class NavigationMenu extends StatelessWidget {
-  const NavigationMenu({super.key});
+  const NavigationMenu({super.key,});
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,8 @@ class NavigationMenu extends StatelessWidget {
 }
 
 class NavigationController extends GetxController {
+  static NavigationController get instance => Get.find();
+
   final Rx<int> selectedIndex = 0.obs;
 
   final screens = [const HomeScreen() , const StoreScreen(), const FavouriteScreen(), const SettingsScreen(),];

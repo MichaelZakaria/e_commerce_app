@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../../../common/widgets/custom_shapes/containers/circular_container.dart';
 import '../../../../../common/widgets/images/my_rounded_image.dart';
+import '../../../../../navigation_menu.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class MyPromoSlider extends StatelessWidget {
@@ -41,7 +42,8 @@ class MyPromoSlider extends StatelessWidget {
                       imageUrl: banner.imageUrl,
                       border: Border.all(width: 0),
                       isNetworkingImage: true,
-                      onPressed: () => Get.toNamed(banner.targetScreen),
+                      onPressed: // () => Get.toNamed(banner.targetScreen),
+                                    () =>   NavigationController.instance.selectedIndex.value = 1
                     )
                 ).toList(),
               ),
