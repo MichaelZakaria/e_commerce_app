@@ -26,6 +26,8 @@ class MyImages {
 
   // payment methods
   static const String paypal = "assets/images/payment_methods/paypal.png";
+  static const String creditCard = "assets/images/payment_methods/credit-card.png";
+  static const String cash = "assets/images/payment_methods/cash.png";
 
   // promo banners
   static const String phonesPromoBanner = "assets/images/promo_banners/phones_promo_banner.jpeg";

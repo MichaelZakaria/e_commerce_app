@@ -1,14 +1,16 @@
+import 'package:e_commerce_app/common/widgets/texts/section_heading.dart';
 import 'package:e_commerce_app/data/repositories/address/address_repository.dart';
 import 'package:e_commerce_app/features/personalization/models/address_model.dart';
+import 'package:e_commerce_app/features/personalization/screens/address/add_new_address.dart';
+import 'package:e_commerce_app/features/personalization/screens/address/widgets/single_address.dart';
 import 'package:e_commerce_app/utils/constants/image_strings.dart';
+import 'package:e_commerce_app/utils/helpers/cloud_helper_functions.dart';
 import 'package:e_commerce_app/utils/network/network_manager.dart';
 import 'package:e_commerce_app/utils/popups/full_screen_loader.dart';
 import 'package:e_commerce_app/utils/popups/loader.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/sizes.dart';
 
 class AddressController extends GetxController {
   static AddressController get instance => Get.find();
@@ -66,7 +68,7 @@ class AddressController extends GetxController {
     }
   }
 
-  /// Function  to reset form fields
+  /// Function to reset form fields
   void resetFormFields() {
     name.clear();
     phoneNumber.clear();
@@ -135,5 +137,57 @@ class AddressController extends GetxController {
       MyFullScreenLoader.stopLoading();
       MyLoaders.errorSnackBar(title: 'Address not found', message: e.toString());
     }
+  }
+
+  /// Show Addresses ModalBottomSheet at checkout
+  Future<dynamic> selectNewAddressPopup(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (_) => SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(MySizes.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const MySectionHeading(title: 'Select Address', showActionButton: false,),
+                FutureBuilder(
+                    future: getAllUserAddresses(),
+                    builder: (_, snapshot) {
+                      // Helper function to: handle error, no record or error message
+                      final response = MyCloudHelperFunction.checkMultipleRecordState(snapshot: snapshot);
+                      if(response != null) return response;
+          
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (_, index) => MySingleAddress(
+                              address: snapshot.data![index],
+                              onTap: () async {
+                                await selectAddress(snapshot.data![index]);
+                                Get.back();
+                              }
+                          )
+                      );
+                    }
+                ),
+                const SizedBox(height: MySizes.defaultSpaces * 2,),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Get.to(() => const AddNewAddressScreen()), 
+                    child: const Text('Add new address'),
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
+    );
+  }
+
+  @override
+  void onInit() {
+    getAllUserAddresses();
+    super.onInit();
   }
 }

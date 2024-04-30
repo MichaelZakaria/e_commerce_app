@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/common/widgets/custom_shapes/containers/circular_container.dart';
 import 'package:e_commerce_app/common/widgets/success_screen/success_screen.dart';
+import 'package:e_commerce_app/features/shop/controllers/product/checkout_controller.dart';
 import 'package:e_commerce_app/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:e_commerce_app/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:e_commerce_app/features/shop/screens/checkout/widgets/billing_payment_section.dart';
@@ -19,6 +20,8 @@ class CheckOutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CheckoutController());
+
     bool dark = MyHelperFunctions.isDarkMode(context);
 
     return Scaffold(
